@@ -1,0 +1,17 @@
+core: 8.x
+type: theme
+name: 'Preqube '
+description: 'Preqube Basic template'
+package: 'Bootstrap'
+
+libraries:
+   - preqube/global-styling
+
+regions:
+  header_top: 'Header top'
+  header: 'Header'
+  banner: 'Banner Slide'
+  content: 'Content'
+  footer: 'Footer'
+  footer_bottom: 'Footer Buttom'
+

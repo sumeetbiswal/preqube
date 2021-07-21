@@ -1,0 +1,17 @@
+{% block paragraph %}
+
+    {% block content %}
+
+			 <div class="col-md-6 service-box service-icon-left-more">
+				<div class="service-icon">
+					<i class="{{content.field_icon|render|striptags|trim}}"></i>
+				</div>
+				<div class="service-content">
+					<h4>{{content.field_sub_title|render|striptags|trim}}</h4>
+					{{content.field_service_description|render|striptags|trim}}
+				</div>
+			</div>
+			 
+    {% endblock %}
+  
+{% endblock paragraph %}

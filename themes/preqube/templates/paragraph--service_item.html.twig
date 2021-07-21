@@ -1,0 +1,18 @@
+{% block paragraph %}
+
+    {% block content %}
+
+			    <div class="col-md-8">                          
+                            <!-- Classic Heading -->
+                        	<h4 class="classic-title"><span>{{content.field_main_head_title|render|striptags|trim}}</span></h4>
+                          
+                        	<div class="row">
+                              
+                               {{content.field_service_item_list}}
+                        </div>
+                        
+                </div>
+			 
+    {% endblock %}
+  
+{% endblock paragraph %}

@@ -1,0 +1,96 @@
+<!-- Container -->
+<div id="container">
+	
+	<!-- Start Header -->
+	<div class="hidden-header"></div>
+	<header class="clearfix">
+		
+		<!-- Start Top Bar -->
+		<div class="top-bar">
+			<div class="container">
+				<div class="row">
+					
+						
+							{{ page.header_top }}
+					
+				</div>
+			</div>
+		</div>
+		<!-- End Top Bar -->
+	  
+		<!-- Start Header ( Logo & Naviagtion ) -->
+		<div class="navbar navbar-default navbar-top">
+				<div class="container">
+					{{ page.header }}
+                        <!-- End Search -->
+                        <!-- Start Navigation List -->
+					
+				</div>
+			</div>
+		<!-- End Header ( Logo & Naviagtion ) -->
+	  
+	</header>
+	<!-- End Header -->
+	
+	{{ page.banner }}
+	
+	
+	<div id="content">
+	
+		{% if not is_front %}		
+		<div class="container">
+			<div class="page-content">
+		 {% endif %}
+		 
+		 
+		{{ page.content }}
+			
+		
+		{% if not is_front %}		
+			</div>
+		</div>
+		 {% endif %}
+		
+	</div>
+      
+	
+	<!-- Start Footer -->
+	<footer>
+		<div class="container">
+			<div class="row footer-widgets">
+			  
+				{{ page.footer }}
+			  
+				
+				
+				
+				
+			</div>
+			<!-- End Subscribe & Social Links Widget -->
+		  
+			<!-- Start Copyright -->
+			<div class="copyright-section">
+				<div class="row">
+				
+					{{ page.footer_bottom }}
+					
+					<!--<div class="col-md-6">
+						<ul class="footer-nav">
+							<li><a href="#">Sitemap</a></li>
+							<li><a href="#">Privacy Policy</a></li>
+							<li><a href="#">Contact</a></li>
+						</ul>
+					</div>		-->				
+				</div>
+			</div>
+			<!-- End Copyright -->
+			
+		</div>
+	</footer>
+	<!-- End Footer -->
+  
+</div>
+<!-- End Container -->
+
+<!-- Go To Top Link -->
+<a href="#" class="back-to-top"><i class="icon-up-open-1"></i></a>
