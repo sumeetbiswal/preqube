@@ -1,0 +1,7 @@
+uuid: 99d91da4-b7c0-47dc-8107-8f9c6a579149
+langcode: en
+status: true
+dependencies: {  }
+id: service_item
+label: 'Service Item'
+behavior_plugins: {  }

@@ -1,0 +1,22 @@
+uuid: 0bbb33a6-f9da-4505-98d5-68b31ffce826
+langcode: en
+status: false
+dependencies:
+  module:
+    - system
+  theme:
+    - preqube
+_core:
+  default_config_hash: jQQUUWN2Uxr5qZtc9zcJKBCxpKY8orN1u2HPqYYRQDI
+id: preqube_powered
+theme: preqube
+region: footer_bottom
+weight: -5
+provider: null
+plugin: system_powered_by_block
+settings:
+  id: system_powered_by_block
+  label: 'Powered by Drupal'
+  provider: system
+  label_display: '0'
+visibility: {  }
