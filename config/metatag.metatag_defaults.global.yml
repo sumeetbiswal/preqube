@@ -1,0 +1,14 @@
+uuid: 43671989-ba3d-43ec-a2b3-e3ac09860828
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: sL588ui1E_8-2c_UupwyYxcqX2OVyMFp3HTLbbFqvPc
+id: global
+label: Global
+tags:
+  keywords: 'Cheap Web Hosting,India, Web Hosting, Unlimited Web Hosting , Best Web Design Company, Preqube Technology, Web Design, Web Development, Reliable Web Maintenance, Search Engine Optimization, Affordable Web Design Companies'
+  description: 'Cheap Unlimited Reliable Web Hosting, Web Design, Web Development, Search Engine Optimization (SEO) Marketing ,E-Commerce,IT Consultant, Domain Registration, College Management'
+  abstract: 'College Management System, Hotel Reservation System, e-Commerce, Real Estate Management System, School Management System,Web Design,Web Development,E-Commerce,IT consultant'
+  title: '[current-page:title] | [site:name]'
+  canonical_url: '[current-page:url]'

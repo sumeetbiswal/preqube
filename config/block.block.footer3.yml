@@ -1,0 +1,25 @@
+uuid: 04804a0e-ca50-4cc2-92f0-b607fbf047dc
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:ee89d61e-23c3-4615-8e9e-8208d0c1003e'
+  module:
+    - block_content
+  theme:
+    - preqube
+id: footer3
+theme: preqube
+region: footer
+weight: 0
+provider: null
+plugin: 'block_content:ee89d61e-23c3-4615-8e9e-8208d0c1003e'
+settings:
+  id: 'block_content:ee89d61e-23c3-4615-8e9e-8208d0c1003e'
+  label: Footer3
+  provider: block_content
+  label_display: '0'
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

@@ -1,0 +1,22 @@
+uuid: 149b58f4-64b4-4368-b16b-613bc3de8a1a
+langcode: en
+status: false
+dependencies:
+  module:
+    - help
+  theme:
+    - preqube
+_core:
+  default_config_hash: 8I8iACSa0sKO3k3jlvUG1ge52rfcKX7USJAQYnzuBgg
+id: preqube_help
+theme: preqube
+region: footer_bottom
+weight: -2
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Help
+  provider: help
+  label_display: '0'
+visibility: {  }

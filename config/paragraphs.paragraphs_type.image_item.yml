@@ -1,0 +1,7 @@
+uuid: 5c517abe-6ca4-4d35-a024-8c815cbbe80d
+langcode: en
+status: true
+dependencies: {  }
+id: image_item
+label: 'Image Item'
+behavior_plugins: {  }

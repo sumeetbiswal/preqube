@@ -1,0 +1,25 @@
+uuid: 223552a9-d8fa-4e05-b27b-1f2570a87f7c
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:f72012a9-a515-477a-883b-d0165cbb2150'
+  module:
+    - block_content
+  theme:
+    - preqube
+id: topheadersocialinfo
+theme: preqube
+region: header_top
+weight: 0
+provider: null
+plugin: 'block_content:f72012a9-a515-477a-883b-d0165cbb2150'
+settings:
+  id: 'block_content:f72012a9-a515-477a-883b-d0165cbb2150'
+  label: 'Top Header Social Info'
+  provider: block_content
+  label_display: '0'
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }
