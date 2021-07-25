@@ -1,0 +1,30 @@
+uuid: c504e56d-01ae-463a-8580-2a99fcf9285f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.partner_logo.field_logo
+    - node.type.partner_logo
+  module:
+    - image
+    - user
+id: node.partner_logo.default
+targetEntityType: node
+bundle: partner_logo
+mode: default
+content:
+  field_logo:
+    weight: 101
+    label: above
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    region: content
+  links:
+    weight: 100
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }

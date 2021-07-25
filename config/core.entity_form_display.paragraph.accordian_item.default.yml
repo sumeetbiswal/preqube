@@ -1,0 +1,46 @@
+uuid: 6e8f2907-349b-4c83-8edd-38dc73ed003f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.accordian_item.field_description
+    - field.field.paragraph.accordian_item.field_title
+    - field.field.paragraph.accordian_item.field_title_icon
+    - paragraphs.paragraphs_type.accordian_item
+  module:
+    - text
+id: paragraph.accordian_item.default
+targetEntityType: paragraph
+bundle: accordian_item
+mode: default
+content:
+  field_description:
+    weight: 2
+    settings:
+      rows: 9
+      summary_rows: 3
+      placeholder: ''
+      show_summary: false
+    third_party_settings: {  }
+    type: text_textarea_with_summary
+    region: content
+  field_title:
+    weight: 1
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_title_icon:
+    weight: 0
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true

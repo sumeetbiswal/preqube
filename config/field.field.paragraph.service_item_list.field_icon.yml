@@ -1,0 +1,19 @@
+uuid: 452fadfa-2404-4324-85ae-e8431827178c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_icon
+    - paragraphs.paragraphs_type.service_item_list
+id: paragraph.service_item_list.field_icon
+field_name: field_icon
+entity_type: paragraph
+bundle: service_item_list
+label: icon
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

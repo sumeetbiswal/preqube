@@ -1,0 +1,7 @@
+uuid: ab6f21b0-44ab-4b5c-a066-9e7bbeeb4321
+langcode: en
+status: false
+dependencies: {  }
+formId: node_prequbecontent_form
+captchaType: default
+label: null

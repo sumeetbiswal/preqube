@@ -1,0 +1,17 @@
+uuid: 32724db5-a12c-4e81-9e0f-299c75a1c4f6
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+name: PrequbeContent
+type: prequbecontent
+description: 'This content type is preqube content type'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: false

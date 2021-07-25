@@ -1,0 +1,19 @@
+uuid: 5955f42f-1e7b-4c5f-9b15-f5c2939eeaf3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_text4
+    - node.type.banner
+id: node.banner.field_text4
+field_name: field_text4
+entity_type: node
+bundle: banner
+label: Text4
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
