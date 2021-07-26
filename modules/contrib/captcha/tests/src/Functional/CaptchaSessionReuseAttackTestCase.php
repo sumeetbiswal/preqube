@@ -1,24 +1,20 @@
 <?php
 
-namespace Drupal\captcha\Tests;
+namespace Drupal\Tests\captcha\Functional;
 
 /**
  * Tests CAPTCHA session reusing.
  *
  * @group captcha
  */
-class CaptchaSessionReuseAttackTestCase extends CaptchaBaseWebTestCase {
+class CaptchaSessionReuseAttackTestCase extends CaptchaWebTestBase {
 
   /**
    * Assert that the CAPTCHA session ID reuse attack was detected.
    */
   protected function assertCaptchaSessionIdReuseAttackDetection() {
-    $this->assertText(self::CAPTCHA_SESSION_REUSE_ATTACK_ERROR_MESSAGE,
-      'CAPTCHA session ID reuse attack should be detected.',
-      'CAPTCHA'
-    );
     // There should be an error message about wrong response.
-    $this->assertText(self::CAPTCHA_WRONG_RESPONSE_ERROR_MESSAGE,
+    $this->assertSession()->pageTextContains(self::CAPTCHA_WRONG_RESPONSE_ERROR_MESSAGE,
       'CAPTCHA response should flagged as wrong.',
       'CAPTCHA'
     );
@@ -51,17 +47,20 @@ class CaptchaSessionReuseAttackTestCase extends CaptchaBaseWebTestCase {
     // Post the form with the solution.
     $edit = $this->getCommentFormValues();
     $edit['captcha_response'] = $solution;
-    $this->drupalPostForm(NULL, $edit, t('Preview'));
+    $this->submitForm($edit, 'Preview');
     // Answer should be accepted and further CAPTCHA omitted.
     $this->assertCaptchaResponseAccepted();
     $this->assertCaptchaPresence(FALSE);
 
+    // Go to comment form of commentable node again.
+    $this->drupalGet('comment/reply/node/' . $node->id() . '/comment');
+
     // Post a new comment, reusing the previous CAPTCHA session.
     $edit = $this->getCommentFormValues();
-    $edit['captcha_sid'] = $captcha_sid;
-    $edit['captcha_token'] = $captcha_token;
+    $this->assertSession()->hiddenFieldExists("captcha_sid")->setValue((string)$captcha_sid);
+    $this->assertSession()->hiddenFieldExists("captcha_token")->setValue((string)$captcha_token);
     $edit['captcha_response'] = $solution;
-    $this->drupalPostForm('comment/reply/node/' . $node->id() . '/comment', $edit, t('Preview'));
+    $this->submitForm($edit, 'Preview');
     // CAPTCHA session reuse attack should be detected.
     $this->assertCaptchaSessionIdReuseAttackDetection();
     // There should be a CAPTCHA.
@@ -94,18 +93,22 @@ class CaptchaSessionReuseAttackTestCase extends CaptchaBaseWebTestCase {
     $edit = $this->getNodeFormValues();
     $edit['captcha_response'] = $solution;
     // Preview the node.
-    $this->drupalPostForm(NULL, $edit, t('Preview'));
+    $this->submitForm($edit, 'Preview');
     // Answer should be accepted.
     $this->assertCaptchaResponseAccepted();
     // Check that there is no CAPTCHA after preview.
     $this->assertCaptchaPresence(FALSE);
 
-    // Post a new comment, reusing the previous CAPTCHA session.
+    // Go to node add form again.
+    $this->drupalGet('node/add/page');
+    $this->assertCaptchaPresence(TRUE);
+
+    // Post a new node, reusing the previous CAPTCHA session.
     $edit = $this->getNodeFormValues();
-    $edit['captcha_sid'] = $captcha_sid;
-    $edit['captcha_token'] = $captcha_token;
+    $this->assertSession()->hiddenFieldExists("captcha_sid")->setValue((string)$captcha_sid);
+    $this->assertSession()->hiddenFieldExists("captcha_token")->setValue((string)$captcha_token);
     $edit['captcha_response'] = $solution;
-    $this->drupalPostForm('node/add/page', $edit, t('Preview'));
+    $this->submitForm($edit, 'Preview');
     // CAPTCHA session reuse attack should be detected.
     $this->assertCaptchaSessionIdReuseAttackDetection();
     // There should be a CAPTCHA.
@@ -123,8 +126,6 @@ class CaptchaSessionReuseAttackTestCase extends CaptchaBaseWebTestCase {
       ->save();
 
     // Go to log in form.
-    // @TODO Bartik has two login forms because of sidebar's one on
-    // user page that's why we have a bug.
     $this->drupalGet('<front>');
     $this->assertCaptchaPresence(TRUE);
 
@@ -135,27 +136,28 @@ class CaptchaSessionReuseAttackTestCase extends CaptchaBaseWebTestCase {
 
     // Log in through form.
     $edit = [
-      'name' => $this->normalUser->getUsername(),
+      'name' => $this->normalUser->getDisplayName(),
       'pass' => $this->normalUser->pass_raw,
       'captcha_response' => $solution,
     ];
-    $this->drupalPostForm(NULL, $edit, t('Log in'), [], [], self::LOGIN_HTML_FORM_ID);
+    $this->submitForm($edit, 'Log in', self::LOGIN_HTML_FORM_ID);
     $this->assertCaptchaResponseAccepted();
     $this->assertCaptchaPresence(FALSE);
     // If a "log out" link appears on the page, it is almost certainly because
     // the login was successful.
-    $this->assertText($this->normalUser->getUsername());
+    $this->assertSession()->pageTextContains($this->normalUser->getDisplayName());
 
     // Log out again.
     $this->drupalLogout();
 
+    // Go to log in form again.
+    $this->drupalGet('<front>');
+
     // Try to log in again, reusing the previous CAPTCHA session.
-    $edit += [
-      'captcha_sid' => $captcha_sid,
-      'captcha_token' => $captcha_token,
-    ];
-    $this->assert('pass', json_encode($edit));
-    $this->drupalPostForm('<front>', $edit, t('Log in'));
+    $this->assertSession()->hiddenFieldExists("captcha_sid")->setValue((string)$captcha_sid);
+    $this->assertSession()->hiddenFieldExists("captcha_token")->setValue((string)$captcha_token);
+    $this->assertNotEmpty(json_encode($edit));
+    $this->submitForm($edit, 'Log in');
     // CAPTCHA session reuse attack should be detected.
     $this->assertCaptchaSessionIdReuseAttackDetection();
     // There should be a CAPTCHA.
@@ -180,11 +182,12 @@ class CaptchaSessionReuseAttackTestCase extends CaptchaBaseWebTestCase {
     $edit = $this->getCommentFormValues();
     $comment_subject = $edit['subject[0][value]'];
     $edit['captcha_response'] = 'Test 123';
-    $this->drupalPostForm('comment/reply/node/' . $node->id() . '/comment', $edit, t('Preview'));
+    $this->drupalGet('comment/reply/node/' . $node->id() . '/comment');
+    $this->submitForm($edit, 'Preview');
     // Post should be accepted: no warnings,
     // no CAPTCHA reuse detection (which could be used by user log in block).
     $this->assertCaptchaResponseAccepted();
-    $this->assertText($comment_subject);
+    $this->assertSession()->pageTextContains($comment_subject);
   }
 
 }

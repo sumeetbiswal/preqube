@@ -1,24 +1,24 @@
 <?php
 
-namespace Drupal\captcha\Tests;
+namespace Drupal\Tests\captcha\Functional;
 
-use Drupal\Core\Field\FieldStorageDefinitionInterface;
-use Drupal\field\Entity\FieldConfig;
-use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
  * Tests CAPTCHA main test case sensitivity.
  *
  * @group captcha
  */
-class CaptchaTestCase extends CaptchaBaseWebTestCase {
+class CaptchaTest extends CaptchaWebTestBase {
+
+  use StringTranslationTrait;
 
   /**
    * Modules to enable.
    *
    * @var array
    */
-  public static $modules = ['block'];
+  protected static $modules = ['block', 'captcha_long_form_id_test'];
 
   /**
    * Testing the protection of the user log in form.
@@ -39,24 +39,59 @@ class CaptchaTestCase extends CaptchaBaseWebTestCase {
     $captcha_point->enable()->save();
 
     // Check if there is a CAPTCHA on the login form (look for the title).
-    $this->drupalGet('');
+    $this->drupalGet('user');
     $this->assertCaptchaPresence(TRUE);
 
     // Try to log in, which should fail.
     $edit = [
-      'name' => $user->getUsername(),
+      'name' => $user->getDisplayName(),
       'pass' => $user->pass_raw,
       'captcha_response' => '?',
     ];
-    $this->drupalPostForm(NULL, $edit, t('Log in'), [], [], self::LOGIN_HTML_FORM_ID);
+    $this->submitForm($edit, $this->t('Log in'), self::LOGIN_HTML_FORM_ID);
     // Check for error message.
-    $this->assertText(self::CAPTCHA_WRONG_RESPONSE_ERROR_MESSAGE, 'CAPTCHA should block user login form', 'CAPTCHA');
+    $this->assertSession()->pageTextContains(self::CAPTCHA_WRONG_RESPONSE_ERROR_MESSAGE, 'CAPTCHA should block user login form', 'CAPTCHA');
 
     // And make sure that user is not logged in:
     // check for name and password fields on ?q=user.
     $this->drupalGet('user');
-    $this->assertField('name', t('Username field found.'), 'CAPTCHA');
-    $this->assertField('pass', t('Password field found.'), 'CAPTCHA');
+    $this->assertSession()->fieldExists('name');
+    $this->assertSession()->fieldExists('pass');
+  }
+
+  /**
+   * Testing the response error menssage.
+   */
+  public function testCaptchaResponseErrorMenssage() {
+    // Customize the response error message.
+    $this->drupalLogin($this->adminUser);
+    $customized_menssage = 'The answer you entered is wrong.';
+    $edit = [
+      'wrong_captcha_response_message' => $customized_menssage,
+    ];
+    $this->drupalGet("admin/config/people/captcha");
+    $this->submitForm($edit, $this->t('Save configuration'));
+
+    // Set a CAPTCHA on login form.
+    /* @var \Drupal\captcha\Entity\CaptchaPoint $captcha_point */
+    $captcha_point = \Drupal::entityTypeManager()
+      ->getStorage('captcha_point')
+      ->load('user_login_form');
+    $captcha_point->setCaptchaType('captcha/Math');
+    $captcha_point->enable()->save();
+
+    // Check if the menssage is default.
+    $this->drupalLogout();
+    $this->drupalGet('user');
+    // Try to log in, which should fail.
+    $edit = [
+      'name' => $this->adminUser->getDisplayName(),
+      'pass' => $this->adminUser->pass_raw,
+      'captcha_response' => '?',
+    ];
+    $this->submitForm($edit, $this->t('Log in'), self::LOGIN_HTML_FORM_ID);
+    $this->assertSession()->pageTextContains($customized_menssage, 'CAPTCHA should block user login form', 'CAPTCHA');
+
   }
 
   /**
@@ -87,23 +122,24 @@ class CaptchaTestCase extends CaptchaBaseWebTestCase {
     $comment_subject = $edit['subject[0][value]'];
     $comment_body = $edit['comment_body[0][value]'];
     $edit['captcha_response'] = $captcha_response;
-    $this->drupalPostForm('comment/reply/node/' . $node->id() . '/comment', $edit, t('Save'), [], [], 'comment-form');
+    $this->drupalGet('comment/reply/node/' . $node->id() . '/comment');
+    $this->submitForm($edit, $this->t('Save'), 'comment-form');
 
     if ($should_pass) {
       // There should be no error message.
       $this->assertCaptchaResponseAccepted();
       // Get node page and check that comment shows up.
       $this->drupalGet('node/' . $node->id());
-      $this->assertText($comment_subject, $message . ' Comment should show up on node page.', 'CAPTCHA');
-      $this->assertText($comment_body, $message . ' Comment should show up on node page.', 'CAPTCHA');
+      $this->assertSession()->pageTextContains($comment_subject, $message . ' Comment should show up on node page.', 'CAPTCHA');
+      $this->assertSession()->pageTextContains($comment_body, $message . ' Comment should show up on node page.', 'CAPTCHA');
     }
     else {
       // Check for error message.
-      $this->assertText(self::CAPTCHA_WRONG_RESPONSE_ERROR_MESSAGE, $message . ' Comment submission should be blocked.', 'CAPTCHA');
+      $this->assertSession()->pageTextContains(self::CAPTCHA_WRONG_RESPONSE_ERROR_MESSAGE, $message . ' Comment submission should be blocked.', 'CAPTCHA');
       // Get node page and check that comment is not present.
       $this->drupalGet('node/' . $node->id());
-      $this->assertNoText($comment_subject, $message . ' Comment should not show up on node page.', 'CAPTCHA');
-      $this->assertNoText($comment_body, $message . ' Comment should not show up on node page.', 'CAPTCHA');
+      $this->assertSession()->pageTextNotContains($comment_subject, $message . ' Comment should not show up on node page.', 'CAPTCHA');
+      $this->assertSession()->pageTextNotContains($comment_body, $message . ' Comment should not show up on node page.', 'CAPTCHA');
     }
   }
 
@@ -157,7 +193,8 @@ class CaptchaTestCase extends CaptchaBaseWebTestCase {
     // Preview comment with correct CAPTCHA answer.
     $edit = $this->getCommentFormValues();
     $edit['captcha_response'] = 'Test 123';
-    $this->drupalPostForm('comment/reply/node/' . $node->id() . '/comment', $edit, t('Preview'));
+    $this->drupalGet('comment/reply/node/' . $node->id() . '/comment');
+    $this->submitForm($edit, $this->t('Preview'));
 
     // Check that there is no CAPTCHA after preview.
     $this->assertCaptchaPresence(FALSE);
@@ -184,7 +221,7 @@ class CaptchaTestCase extends CaptchaBaseWebTestCase {
     $edit = $this->getNodeFormValues();
     $edit['captcha_response'] = 'Test 123';
     $this->drupalGet('node/add/page');
-    $this->drupalPostForm(NULL, $edit, t('Preview'));
+    $this->submitForm($edit, $this->t('Preview'));
 
     $this->assertCaptchaPresence(FALSE);
   }
@@ -214,49 +251,35 @@ class CaptchaTestCase extends CaptchaBaseWebTestCase {
   }
 
   /**
-   * Tests that the CAPTCHA is not changed on AJAX form rebuilds.
+   * Test that forms with IDs exceeding 64 characters can be assigned captchas.
    */
-  public function testAjaxFormRebuild() {
-    // Setup captcha point for user edit form.
-    \Drupal::entityManager()->getStorage('captcha_point')->create([
-      'id' => 'user_form',
-      'formId' => 'user_form',
-      'status' => TRUE,
+  public function testLongFormId() {
+    // We add the form manually so we can mimic the character
+    // truncation of the label field as formId.
+    $this->drupalLogin($this->adminUser);
+    $this->drupalGet(self::CAPTCHA_ADMIN_PATH);
+
+    $label = 'this_formid_is_intentionally_longer_than_64_characters_to_test_captcha';
+    // Truncated to 64 chars so it can be a machine name.
+    $formId = substr($label, 0, 64);
+
+    $form_values = [
+      'label' => $label,
+      'formId' => $formId,
       'captchaType' => 'captcha/Math',
-    ])->save();
+    ];
 
-    // Add multiple text field on user edit form.
-    $field_storage_config = FieldStorageConfig::create([
-      'field_name' => 'field_texts',
-      'type' => 'string',
-      'entity_type' => 'user',
-      'cardinality' => FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED,
-    ]);
-    $field_storage_config->save();
-    FieldConfig::create([
-      'field_storage' => $field_storage_config,
-      'bundle' => 'user',
-    ])->save();
-    entity_get_form_display('user', 'user', 'default')
-      ->setComponent('field_texts', [
-        'type' => 'string_textfield',
-        'weight' => 10,
-      ])
-      ->save();
+    // Create intentionally long id Captcha Point.
+    $this->drupalGet(self::CAPTCHA_ADMIN_PATH . '/captcha-points/add');
+    $this->submitForm($form_values, $this->t('Save'));
+    $this->assertSession()->responseContains($this->t('Captcha Point for %label form was created.', ['%label' => $formId]));
 
-    // Create and login a user.
-    $user = $this->drupalCreateUser([]);
-    $this->drupalLogin($user);
+    // We need to log out to test the captcha.
+    $this->drupalLogout();
 
-    // On edit form, add another item and save.
-    $this->drupalGet("user/{$user->id()}/edit");
-    $this->drupalPostAjaxForm(NULL, [], 'field_texts_add_more');
-    $this->drupalPostForm(NULL, [
-      'captcha_response' => $this->getMathCaptchaSolutionFromForm('user-form'),
-    ], t('Save'));
-
-    // No error.
-    $this->assertText(t('The changes have been saved.'));
+    // Navigate to the form with a >64 char id and confirm there is Captcha.
+    $this->drupalGet('captcha/test_form/long_id');
+    $this->assertCaptchaPresence(TRUE);
   }
 
 }
