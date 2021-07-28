@@ -765,32 +765,18 @@ $settings['file_scan_ignore_directories'] = [
 # }
 
 
-$host = $_SERVER['HTTP_HOST'];
-
-if( $host == 'localhost' ){
 
 $databases['default']['default'] = array (
-  'database' => 'preqube',
-  'username' => 'root',
-  'password' => '',
+  'database' => 'prequdzs_preqube',
+  'username' => 'prequdzs_preqube',
+  'password' => 'Preqube@25689',
   'prefix' => '',
   'host' => 'localhost',
   'port' => '3306',
   'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
   'driver' => 'mysql',
 );
-}else{
-	$databases['default']['default'] = array (
-	  'database' => 'prequdzs_preqube',
-	  'username' => 'prequdzs_preqube',
-	  'password' => 'Preqube@25689',
-	  'prefix' => '',
-	  'host' => 'localhost',
-	  'port' => '3306',
-	  'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
-	  'driver' => 'mysql',
-	);
 	
-}
+
 $settings['install_profile'] = 'standard';
 $config_directories['sync'] = 'config';
