@@ -10,6 +10,13 @@ use Drupal\Core\Config\Entity\ConfigEntityInterface;
 interface ParagraphsTypeInterface extends ConfigEntityInterface {
 
   /**
+   * Icon upload location.
+   *
+   * @var string
+   */
+  const ICON_UPLOAD_LOCATION = 'public://paragraphs_type_icon/';
+
+  /**
    * Returns the ordered collection of feature plugin instances.
    *
    * @return \Drupal\paragraphs\ParagraphsBehaviorCollection
@@ -31,10 +38,34 @@ interface ParagraphsTypeInterface extends ConfigEntityInterface {
   /**
    * Retrieves all the enabled plugins.
    *
-   * @return array
+   * @return \Drupal\paragraphs\ParagraphsBehaviorInterface[]
    *   Array of the enabled plugins as instances.
    */
   public function getEnabledBehaviorPlugins();
+
+  /**
+   * Returns the icon file entity.
+   *
+   * @return \Drupal\file\FileInterface|bool
+   *   The icon's file entity or FALSE if icon does not exist.
+   */
+  public function getIconFile();
+
+  /**
+   * Returns the icon's URL.
+   *
+   * @return string|bool
+   *   The icon's URL or FALSE if icon does not exits.
+   */
+  public function getIconUrl();
+
+  /**
+   * Gets the description.
+   *
+   * @return string
+   *   The description of this paragraph type.
+   */
+  public function getDescription();
 
   /**
    * Returns TRUE if $plugin_id is enabled on this ParagraphType Entity.
@@ -43,7 +74,7 @@ interface ParagraphsTypeInterface extends ConfigEntityInterface {
    *   The plugin id, as specified in the plugin annotation details.
    *
    * @return bool
-   *   True or False dependant on plugin state
+   *   TRUE if the plugin is enabled, FALSE otherwise.
    */
   public function hasEnabledBehaviorPlugin($plugin_id);
 
