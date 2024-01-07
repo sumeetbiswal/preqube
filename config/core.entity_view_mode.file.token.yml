@@ -1,0 +1,10 @@
+uuid: baaff193-286e-4f6d-8170-bb9544e05d50
+langcode: en
+status: true
+dependencies:
+  module:
+    - file
+id: file.token
+label: Token
+targetEntityType: file
+cache: true

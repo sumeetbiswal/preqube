@@ -1,0 +1,21 @@
+
+{%
+  set classes = [
+    'paragraph',
+    'paragraph--type--' ~ paragraph.bundle|clean_class,
+    view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
+  ]
+%}
+{% block paragraph %}
+
+    {% block content %}
+				<div class="col-md-6">
+					<div>
+						<div class="item">{{ content.field_image }}</div>
+					</div>
+				</div>
+			
+    {% endblock %}
+  
+{% endblock paragraph %}
+

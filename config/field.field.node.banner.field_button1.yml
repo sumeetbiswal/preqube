@@ -1,0 +1,19 @@
+uuid: 37420df2-aa5d-4d71-8063-6e5339d3ad5c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_button1
+    - node.type.banner
+id: node.banner.field_button1
+field_name: field_button1
+entity_type: node
+bundle: banner
+label: button1
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

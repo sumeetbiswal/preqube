@@ -1,0 +1,20 @@
+uuid: 8391af19-9a18-47bf-b399-dbf1526e9694
+langcode: en
+status: false
+dependencies:
+  theme:
+    - preqube
+_core:
+  default_config_hash: 7rR9chwXvdM2H8OYMAYx9Zj3GGlPMrZp_M3ZA4thYTk
+id: preqube_page_title
+theme: preqube
+region: footer_bottom
+weight: -6
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Page title'
+  label_display: '0'
+  provider: core
+visibility: {  }

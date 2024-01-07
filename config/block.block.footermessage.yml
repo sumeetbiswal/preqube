@@ -1,0 +1,25 @@
+uuid: 4ea033e9-3671-4258-9078-1e55a32c4759
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:0a5405a8-1696-420a-bc83-728caca0f8eb'
+  module:
+    - block_content
+  theme:
+    - preqube
+id: footermessage
+theme: preqube
+region: footer_bottom
+weight: -10
+provider: null
+plugin: 'block_content:0a5405a8-1696-420a-bc83-728caca0f8eb'
+settings:
+  id: 'block_content:0a5405a8-1696-420a-bc83-728caca0f8eb'
+  label: 'Footer Message'
+  label_display: '0'
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

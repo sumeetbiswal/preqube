@@ -1,0 +1,19 @@
+uuid: 48bc9903-9093-4240-a5b7-99efce28c105
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_text1
+    - node.type.banner
+id: node.banner.field_text1
+field_name: field_text1
+entity_type: node
+bundle: banner
+label: Text1
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

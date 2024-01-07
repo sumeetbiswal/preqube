@@ -1,0 +1,25 @@
+uuid: 8f52fe9f-9906-4a5b-a703-181e9fffb17e
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:998cf860-2b68-4079-a22d-774cba0ce281'
+  module:
+    - block_content
+  theme:
+    - preqube
+id: topheadercontactinfo
+theme: preqube
+region: header_top
+weight: -7
+provider: null
+plugin: 'block_content:998cf860-2b68-4079-a22d-774cba0ce281'
+settings:
+  id: 'block_content:998cf860-2b68-4079-a22d-774cba0ce281'
+  label: 'Top Header Contact Info'
+  label_display: '0'
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

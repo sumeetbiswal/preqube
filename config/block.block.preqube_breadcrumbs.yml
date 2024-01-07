@@ -1,0 +1,27 @@
+uuid: c40f0604-6a66-497f-ae81-afef11fb1387
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - preqube
+_core:
+  default_config_hash: oXUb3JZR2WW5VOdw4HrhRicCsq51mCgLfRyvheG68ck
+id: preqube_breadcrumbs
+theme: preqube
+region: banner
+weight: -11
+provider: null
+plugin: system_breadcrumb_block
+settings:
+  id: system_breadcrumb_block
+  label: Breadcrumbs
+  label_display: '0'
+  provider: system
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    context_mapping: {  }
+    pages: "/about\r\n/why-us\r\n/quality-assurance\r\n/services\r\n/contact\r\n/sitemap\r\n/privacy-policy\r\n/development-process\r\n/hosting"

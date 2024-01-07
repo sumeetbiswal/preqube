@@ -1,0 +1,48 @@
+uuid: a9b5be7b-722a-43d0-be3b-1de42e9f3adb
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.accordian_title_article.field_accordian_item
+    - field.field.paragraph.accordian_title_article.field_col_width
+    - field.field.paragraph.accordian_title_article.field_headings
+    - paragraphs.paragraphs_type.accordian_title_article
+  module:
+    - paragraphs
+id: paragraph.accordian_title_article.default
+targetEntityType: paragraph
+bundle: accordian_title_article
+mode: default
+content:
+  field_accordian_item:
+    type: entity_reference_paragraphs
+    weight: 2
+    region: content
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
+    third_party_settings: {  }
+  field_col_width:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_headings:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true
+  uid: true

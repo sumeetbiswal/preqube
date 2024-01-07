@@ -1,0 +1,31 @@
+uuid: 74033d3e-80bb-4945-9538-8bc750fb868b
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:346ba831-0d04-4711-b6bc-2bbf89c1ca55'
+  module:
+    - block_content
+    - system
+  theme:
+    - preqube
+id: fourbox
+theme: preqube
+region: content
+weight: 0
+provider: null
+plugin: 'block_content:346ba831-0d04-4711-b6bc-2bbf89c1ca55'
+settings:
+  id: 'block_content:346ba831-0d04-4711-b6bc-2bbf89c1ca55'
+  label: 'Four Box'
+  label_display: '0'
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    context_mapping: {  }
+    pages: '<front>'

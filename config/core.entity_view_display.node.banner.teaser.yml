@@ -1,0 +1,46 @@
+uuid: 06d68dbe-d66d-4318-a2f2-a2bc834d7049
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.banner.field_banner_type
+    - field.field.node.banner.field_button1
+    - field.field.node.banner.field_button1_link
+    - field.field.node.banner.field_button2
+    - field.field.node.banner.field_button2_link
+    - field.field.node.banner.field_heading
+    - field.field.node.banner.field_image1
+    - field.field.node.banner.field_image2
+    - field.field.node.banner.field_sub_heading
+    - field.field.node.banner.field_text1
+    - field.field.node.banner.field_text2
+    - field.field.node.banner.field_text3
+    - field.field.node.banner.field_text4
+    - node.type.banner
+  module:
+    - user
+id: node.banner.teaser
+targetEntityType: node
+bundle: banner
+mode: teaser
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_banner_type: true
+  field_button1: true
+  field_button1_link: true
+  field_button2: true
+  field_button2_link: true
+  field_heading: true
+  field_image1: true
+  field_image2: true
+  field_sub_heading: true
+  field_text1: true
+  field_text2: true
+  field_text3: true
+  field_text4: true
