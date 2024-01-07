@@ -1,7 +1,0 @@
-uuid: 97db3e5c-9d27-4563-855a-06d0b5d01515
-langcode: en
-status: true
-dependencies: {  }
-formId: webform_submission_contact_node_11_form
-captchaType: captcha/Math
-label: webform-submission-contact-node-11-form

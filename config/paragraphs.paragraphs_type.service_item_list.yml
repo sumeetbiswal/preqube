@@ -1,7 +1,0 @@
-uuid: 87c856a1-0bcf-497d-8e05-74504ca2fcfc
-langcode: en
-status: true
-dependencies: {  }
-id: service_item_list
-label: 'Service Item list'
-behavior_plugins: {  }

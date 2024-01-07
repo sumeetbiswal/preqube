@@ -1,7 +1,0 @@
-uuid: 176b5002-2232-45f4-bef1-4228d2540cbd
-langcode: en
-status: true
-dependencies: {  }
-id: accordian_item
-label: 'Accordian Item'
-behavior_plugins: {  }

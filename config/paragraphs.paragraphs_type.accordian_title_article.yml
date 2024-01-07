@@ -1,7 +1,0 @@
-uuid: 00499bda-966a-4d04-9ba9-38d87b057b81
-langcode: en
-status: true
-dependencies: {  }
-id: accordian_title_article
-label: 'Accordian Title Article'
-behavior_plugins: {  }
