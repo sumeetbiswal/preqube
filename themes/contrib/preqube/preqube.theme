@@ -19,6 +19,9 @@ function preqube_preprocess_breadcrumb(&$variables) {
   );
   $variables['#cache']['contexts'][] = 'url';
 }
+function preqube_preprocess_page(&$variables) {
+  $variables['base_path'] = \Drupal::request()->getSchemeAndHttpHost();
+}
 /*
 function preqube_preprocess_node(&$variables)
 {
